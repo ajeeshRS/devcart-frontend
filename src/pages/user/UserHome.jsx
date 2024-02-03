@@ -11,12 +11,12 @@ function UserHome() {
 
   return (
     <>
-      {pathName === "/user/home" ? (
+      {pathName === "/" ? (
         <>
           <NavBar />
           <Home />
         </>
-      ) : pathName === "/user/search" ? (
+      ) : pathName === "/search" ? (
         <>
           <SearchNavBar />
           <SearchPage />
