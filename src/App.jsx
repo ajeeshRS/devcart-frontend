@@ -9,7 +9,7 @@ import UserHome from "./pages/user/UserHome";
 import ProductPageOnCategory from "./pages/user/ProductPageOnCategory";
 import ViewProduct from "./pages/user/ViewProduct";
 import WishList from "./pages/user/WishList";
-import UserCartPage from "./pages/user/userCartPage";
+import UserCartPage from "./pages/user/UserCartPage";
 import { SearchProvider } from "./context/SearchContext";
 import ChooseAddress from "./pages/user/ChooseAddress";
 import AddAddressPage from "./pages/user/AddAddressPage";
