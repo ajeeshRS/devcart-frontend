@@ -65,7 +65,7 @@ function NavBar({ setSearchResults }) {
       if (res.status === 200) {
         updateSearchResults(res.data);
         setSearchTerm("");
-        navigate("/user/search");
+        navigate("/search");
       }
     } catch (error) {
       console.log(error);
