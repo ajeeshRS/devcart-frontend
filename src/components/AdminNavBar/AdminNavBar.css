@@ -1,0 +1,46 @@
+.span-el {
+  color: #0ecc25;
+}
+
+.MuiDrawer-paper {
+  width: 240px;
+  align-items: center;
+}
+
+.MuiList-root {
+  width: 100%;
+}
+.search-input {
+  width: 200px;
+  height: 25px;
+  outline: 0;
+  border-radius: 5px;
+  border: 1px solid rgb(231, 231, 231);
+  padding-left: 10px;
+}
+@media (max-width: 765px) {
+  .search-input {
+    width: 120px;
+  }
+}
+app-bar {
+  color: rgb(194, 194, 194);
+}
+
+.nav-items::after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.nav-items:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
