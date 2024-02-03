@@ -39,12 +39,12 @@ function App() {
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/all-products" element={<AllProductsPage />} />
           <Route path="/admin/Edit-product/:id" element={<EditProductPage />} />
-          <Route path="/user/home" element={<UserHome />} />
+          <Route path="/" element={<UserHome />} />
           <Route path="/user/:category" element={<ProductPageOnCategory />} />
           <Route path="/user/view-product/:id" element={<ViewProduct />} />
           <Route path="/user/wishlist" element={<WishList />} />
           <Route path="/user/cart" element={<UserCartPage />} />
-          <Route path="/user/search" element={<UserHome />} />
+          <Route path="/search" element={<UserHome />} />
           <Route
             path="/user/address/add-address"
             element={<AddAddressPage />}
