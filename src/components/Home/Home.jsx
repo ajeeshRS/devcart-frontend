@@ -528,7 +528,7 @@ function Home() {
           pl={10}
           pt={1}
         >
-          <Grid>
+          <Grid pt={2}>
             <Typography
               sx={{
                 color: "#fff",
