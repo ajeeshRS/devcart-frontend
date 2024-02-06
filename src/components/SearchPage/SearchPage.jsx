@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearchContext } from "../../context/SearchContext";
+import { BASE_URL } from "../../utils/helpers";
 
 function SearchPage() {
   const { searchResults, updateSearchResults } = useSearchContext();
