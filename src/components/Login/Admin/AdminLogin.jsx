@@ -35,7 +35,9 @@ function AdminLogin() {
         const adminAccessToken = response.data;
         localStorage.setItem("adminAccessToken", adminAccessToken);
         setAdminLoginData(nullData);
-        navigate("/admin/all-products");
+        if(adminAccessToken){
+          navigate("/admin/all-products");
+        }
       })
       .catch((err) => {
         console.log(err);
