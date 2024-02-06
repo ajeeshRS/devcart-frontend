@@ -83,7 +83,7 @@ function SearchPage() {
             <Grid md={4} width={"400px"}>
               <img
                 className="product-img"
-                src={`http://localhost:3001/uploads/${item.image.filename}`}
+                src={`${BASE_URL}/uploads/${item.image.filename}`}
                 alt="product-image"
               />
             </Grid>

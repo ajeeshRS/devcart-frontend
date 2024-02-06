@@ -247,7 +247,7 @@ function Home() {
               >
                 <CardMedia
                   component="img"
-                  image={`http://localhost:3001/uploads/${product.image.filename}`}
+                  image={`${BASE_URL}/uploads/${product.image.filename}`}
                   alt="Paella dish"
                   sx={{ height: "100px", objectFit: "cover" }}
                 />
@@ -355,7 +355,7 @@ function Home() {
               >
                 <CardMedia
                   component="img"
-                  image={`http://localhost:3001/uploads/${product.image.filename}`}
+                  image={`${BASE_URL}/uploads/${product.image.filename}`}
                   alt="Paella dish"
                   sx={{ height: "100px", objectFit: "contain" }}
                 />
@@ -456,7 +456,7 @@ function Home() {
               >
                 <CardMedia
                   component="img"
-                  image={`http://localhost:3001/uploads/${product.image.filename}`}
+                  image={`${BASE_URL}/uploads/${product.image.filename}`}
                   alt="Paella dish"
                   sx={{ height: "100px", objectFit: "contain" }}
                 />
