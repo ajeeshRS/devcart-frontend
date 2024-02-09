@@ -83,7 +83,7 @@ function NavBar({ setSearchResults }) {
   };
 
   const handleLogOut = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate("/user/login");
   };
 

@@ -33,7 +33,7 @@ function AdminNavBar({ admin }) {
   };
 
   const handleLogOut = () => {
-    localStorage.clear();
+    localStorage.removeItem("adminAccessToken");
     navigate("/admin/login");
   };
   return (
