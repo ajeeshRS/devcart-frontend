@@ -25,8 +25,31 @@ import ChangeUsernamePage from "./pages/user/ChangeUsernamePage";
 import ResetPasswordPage from "./pages/user/ResetPasswordPage";
 import AddCouponPage from "./pages/admin/AddCouponPage";
 import Dashboard from "./pages/admin/Dashboard";
+import MobileNotSupported from "./components/MobileNotSupported/MobileNotSupported";
+import { useEffect, useState } from "react";
 
 function App() {
+  // const isMobile= window.innerWidth<=768
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  if (isMobile) {
+    return <MobileNotSupported />;
+  }
+
   return (
     <>
       <SearchProvider>
