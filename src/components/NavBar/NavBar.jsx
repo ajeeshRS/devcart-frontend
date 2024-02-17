@@ -47,21 +47,28 @@ function NavBar({ setSearchResults }) {
   const location = useLocation();
   const [cartItems, setCartItems] = useState([]);
   const { updateSearchResults } = useSearchContext();
-
+  const [user, setUser] = useState(null);
   const handleOnChange = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
   };
 
+  // fetch user info
+  const getUser = async () => {
+    try {
+      const userHeader = getHeaders();
+      setUser(userHeader);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // to perform search query
   const searchButton = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/user/search/${searchTerm}`,
-        {
-          headers: getHeaders(),
-        }
-      );
+      const res = await axios.get(`${BASE_URL}/user/search/${searchTerm}`, {
+        headers: getHeaders(),
+      });
       if (res.status === 200) {
         updateSearchResults(res.data);
         setSearchTerm("");
@@ -105,6 +112,10 @@ function NavBar({ setSearchResults }) {
   };
 
   useEffect(() => {
+    getUser();
+  }, []);
+
+  useEffect(() => {
     getCartItems();
   }, [cartItems]);
 
@@ -127,7 +138,6 @@ function NavBar({ setSearchResults }) {
         height={"10svh"}
       >
         <Grid
-         
           md={4}
           sx={{
             marginLeft: {
@@ -157,7 +167,7 @@ function NavBar({ setSearchResults }) {
             </span>
           </Typography>
         </Grid>
-        <Grid  md={4} width={"500px"}>
+        <Grid md={4} width={"500px"}>
           <input
             style={{ width: "400px", height: "40px", borderRadius: "50px" }}
             onChange={handleOnChange}
@@ -257,35 +267,54 @@ function NavBar({ setSearchResults }) {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={() => navigate("/user/profile")}>
-                  <ListItemIcon>
-                    <Person sx={{ color: "#7E30E1" }} />
-                  </ListItemIcon>
-                  <Typography
-                    sx={{
-                      fontFamily: "poppins",
-                      color: "black",
-                      fontWeight: "500",
-                    }}
-                  >
-                    Profile
-                  </Typography>
-                </MenuItem>
+                {user == null ? (
+                  <MenuItem onClick={() => navigate("/user/login")}>
+                    <ListItemIcon>
+                      <Person sx={{ color: "#7E30E1" }} />
+                    </ListItemIcon>
+                    <Typography
+                      sx={{
+                        fontFamily: "poppins",
+                        color: "black",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Login
+                    </Typography>
+                  </MenuItem>
+                ) : (
+                  <div>
+                    <MenuItem onClick={() => navigate("/user/profile")}>
+                      <ListItemIcon>
+                        <Person sx={{ color: "#7E30E1" }} />
+                      </ListItemIcon>
+                      <Typography
+                        sx={{
+                          fontFamily: "poppins",
+                          color: "black",
+                          fontWeight: "500",
+                        }}
+                      >
+                        Profile
+                      </Typography>
+                    </MenuItem>
 
-                <MenuItem onClick={() => handleLogOut()}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" sx={{ color: "#7E30E1" }} />
-                  </ListItemIcon>
-                  <Typography
-                    sx={{
-                      fontFamily: "poppins",
-                      color: "black",
-                      fontWeight: "500",
-                    }}
-                  >
-                    Log out
-                  </Typography>
-                </MenuItem>
+                    <MenuItem onClick={() => handleLogOut()}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" sx={{ color: "#7E30E1" }} />
+                      </ListItemIcon>
+                      <Typography
+                        sx={{
+                          fontFamily: "poppins",
+                          color: "black",
+                          fontWeight: "500",
+                        }}
+                      >
+                        Log out
+                      </Typography>
+                    </MenuItem>
+                  </div>
+                )}
               </Menu>
             </>
           )}

@@ -24,12 +24,9 @@ function ProductList() {
   useEffect(() => {
     const fetchKeyboards = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/user/get-products`,
-          {
-            headers: getHeaders(),
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/user/get-products`, {
+          headers: getHeaders(),
+        });
         setProducts(response.data);
       } catch (err) {
         console.log(err);
@@ -126,7 +123,7 @@ function ProductList() {
             <Grid md={4} width={"400px"}>
               <img
                 className="product-img"
-                src={`http://localhost:3001/uploads/${product.image.filename}`}
+                src={`${BASE_URL}/uploads/${product.image.filename}`}
                 alt="product-image"
               />
             </Grid>
@@ -165,12 +162,11 @@ function ProductList() {
                 onClick={() => {
                   toggleFavorite(product._id);
                 }}
-                
               >
                 {favorites.includes(product._id) ? (
                   <FavoriteIcon sx={{ color: "#C3ACD0" }} />
                 ) : (
-                  <FavoriteBorder sx={{color:"black"}}/>
+                  <FavoriteBorder sx={{ color: "black" }} />
                 )}
               </IconButton>
             </Grid>
