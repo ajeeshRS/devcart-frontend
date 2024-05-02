@@ -64,6 +64,7 @@ function Home() {
       const response = await axios.get(`${BASE_URL}/user/get-products`, {
         headers: getHeaders(),
       });
+      // console.log(response.data)
       setProductData(response.data);
     } catch (err) {
       console.log(err);

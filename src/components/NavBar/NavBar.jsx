@@ -211,8 +211,10 @@ function NavBar({ setSearchResults }) {
         >
           {isMatch ? (
             <DrawerComponent />
-          ) : (
+          )  : ( 
             <>
+            {user?(
+<>
               <Link to={"/user/wishlist"} className="link-tag">
                 <Badge badgeContent={""}>
                   <FavoriteBorderOutlined sx={{ color: "black" }} />
@@ -229,6 +231,11 @@ function NavBar({ setSearchResults }) {
                   </Typography>
                 </Badge>
               </Link>
+</>
+            ):null
+
+            }
+
               <IconButton sx={{ color: "#262626" }} onClick={handleClick}>
                 <PersonOutline />
               </IconButton>
