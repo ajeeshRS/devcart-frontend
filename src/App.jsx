@@ -46,9 +46,9 @@ function App() {
     };
   }, []);
 
-  if (isMobile) {
-    return <MobileNotSupported />;
-  }
+  // if (isMobile) {
+  //   return <MobileNotSupported />;
+  // }
 
   return (
     <>

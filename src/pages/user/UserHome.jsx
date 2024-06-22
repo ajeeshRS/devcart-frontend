@@ -4,6 +4,7 @@ import Home from "../../components/Home/Home";
 import { useLocation } from "react-router-dom";
 import SearchNavBar from "../../components/SearchNavbar/SearchNavBar";
 import SearchPage from "../../components/SearchPage/SearchPage";
+import Footer from "../../components/Footer/Footer";
 
 function UserHome() {
   const location = useLocation();
@@ -15,6 +16,7 @@ function UserHome() {
         <>
           <NavBar />
           <Home />
+          <Footer/>
         </>
       ) : pathName === "/user/search" ? (
         <>

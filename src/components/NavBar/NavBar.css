@@ -2,8 +2,10 @@
   color: #7E30E1;
 }
 
+
 .MuiDrawer-paper {
-  width: 240px;
+  /* width: 240px; */
+  width: 100%;
   align-items: center;
 }
 
@@ -18,14 +20,21 @@
   border: 1px solid rgb(231, 231, 231);
   padding-left: 10px;
   font-size: 17px;
+  
 }
-@media (max-width: 765px) {
+
+.search-input::placeholder {
+  font-size: 14px;
+}
+/* @media (max-width: 765px) {
   .search-input {
     width: 120px;
   }
-}
-app-bar {
-  color: rgb(255, 255, 255);
+} */
+.app-bar {
+  /* background: #000; */
+  height: 10vh;
+  
 }
 
 .nav-items {

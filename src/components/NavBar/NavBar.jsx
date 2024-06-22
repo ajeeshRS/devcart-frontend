@@ -48,6 +48,7 @@ function NavBar({ setSearchResults }) {
   const [cartItems, setCartItems] = useState([]);
   const { updateSearchResults } = useSearchContext();
   const [user, setUser] = useState(null);
+
   const handleOnChange = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
@@ -120,15 +121,7 @@ function NavBar({ setSearchResults }) {
   }, [cartItems]);
 
   return (
-    <AppBar
-      position="fixed"
-      elevation={0}
-      className="app-bar"
-      sx={{
-        height: "10svh",
-        backgroundColor: "#ffff",
-      }}
-    >
+    <nav className="app-bar">
       <Grid
         md={12}
         width={"100%"}
@@ -139,9 +132,10 @@ function NavBar({ setSearchResults }) {
       >
         <Grid
           md={4}
+          sm={1}
           sx={{
             marginLeft: {
-              xs: "40px",
+              xs: "20px",
               md: "90px",
               sm: "50px",
             },
@@ -153,8 +147,8 @@ function NavBar({ setSearchResults }) {
               color: "#262626",
               fontSize: {
                 md: "30px",
-                sm: "25px",
-                xs: "25px",
+                sm: "20px",
+                xs: "20px",
               },
               fontWeight: "800",
               fontFamily: "Pacifico",
@@ -167,9 +161,9 @@ function NavBar({ setSearchResults }) {
             </span>
           </Typography>
         </Grid>
-        <Grid md={4} width={"500px"}>
+        <Grid md={4} sm={3}>
           <input
-            style={{ width: "400px", height: "40px", borderRadius: "50px" }}
+            style={{ height: "30px", borderRadius: "50px" }}
             onChange={handleOnChange}
             onKeyDown={handleKeyPress}
             type="text"
@@ -187,7 +181,7 @@ function NavBar({ setSearchResults }) {
               "&:hover": { color: "#fff", backgroundColor: "#6018BE" },
               transition: "0.3s ease-in",
             }}
-            size="medium"
+            size="small"
           >
             <SearchOutlined />
           </IconButton>
@@ -195,6 +189,7 @@ function NavBar({ setSearchResults }) {
 
         <Grid
           md={4}
+          sm={4}
           color={"#262626"}
           display={"flex"}
           justifyContent={"space-between"}
@@ -210,31 +205,37 @@ function NavBar({ setSearchResults }) {
           }}
         >
           {isMatch ? (
-            <DrawerComponent />
-          )  : ( 
+            <DrawerComponent cartItems={cartItems} user={user} />
+          ) : (
             <>
-            {user?(
-<>
-              <Link to={"/user/wishlist"} className="link-tag">
-                <Badge badgeContent={""}>
-                  <FavoriteBorderOutlined sx={{ color: "black" }} />
-                  <Typography className="typo" fontFamily={"poppins"} pl={1}>
-                    Wishlist
-                  </Typography>
-                </Badge>
-              </Link>
-              <Link to={"/user/cart"}>
-                <Badge badgeContent={cartItems.length} color="primary">
-                  <ShoppingCartOutlined sx={{ color: "black" }} />
-                  <Typography className="typo" fontFamily={"poppins"} pl={1}>
-                    Cart
-                  </Typography>
-                </Badge>
-              </Link>
-</>
-            ):null
-
-            }
+              {user ? (
+                <>
+                  <Link to={"/user/wishlist"} className="link-tag">
+                    <Badge badgeContent={""}>
+                      <FavoriteBorderOutlined sx={{ color: "black" }} />
+                      <Typography
+                        className="typo"
+                        fontFamily={"poppins"}
+                        pl={1}
+                      >
+                        Wishlist
+                      </Typography>
+                    </Badge>
+                  </Link>
+                  <Link to={"/user/cart"}>
+                    <Badge badgeContent={cartItems.length} color="primary">
+                      <ShoppingCartOutlined sx={{ color: "black" }} />
+                      <Typography
+                        className="typo"
+                        fontFamily={"poppins"}
+                        pl={1}
+                      >
+                        Cart
+                      </Typography>
+                    </Badge>
+                  </Link>
+                </>
+              ) : null}
 
               <IconButton sx={{ color: "#262626" }} onClick={handleClick}>
                 <PersonOutline />
@@ -327,7 +328,7 @@ function NavBar({ setSearchResults }) {
           )}
         </Grid>
       </Grid>
-    </AppBar>
+    </nav>
   );
 }
 
