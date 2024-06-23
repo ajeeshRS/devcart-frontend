@@ -70,10 +70,11 @@ function NavBar({ setSearchResults }) {
       const res = await axios.get(`${BASE_URL}/user/search/${searchTerm}`, {
         headers: getHeaders(),
       });
+      console.log(res.data);
       if (res.status === 200) {
         updateSearchResults(res.data);
         setSearchTerm("");
-        navigate("/user/search");
+        navigate("/user/search", { state: { query: searchTerm } });
       }
     } catch (error) {
       console.log(error);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -9,8 +9,12 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Search, ShoppingCartOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import {
+  Search,
+  SearchOutlined,
+  ShoppingCartOutlined,
+} from "@mui/icons-material";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSearchContext } from "../../context/SearchContext";
 import { getHeaders } from "../../utils/auth";
@@ -19,6 +23,7 @@ function SearchNavBar() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const { updateSearchResults } = useSearchContext();
+  const location = useLocation();
 
   const handleOnChange = (e) => {
     e.preventDefault();
@@ -26,14 +31,12 @@ function SearchNavBar() {
   };
 
   // to perform search query
-  const searchButton = async () => {
+  const searchButton = async (searchTerm) => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/user/search/${searchTerm}`,
-        {
-          headers: getHeaders(),
-        }
-      );
+      localStorage.setItem('query',searchTerm);
+      const res = await axios.get(`${BASE_URL}/user/search/${searchTerm}`, {
+        headers: getHeaders(),
+      });
       if (res.status === 200) {
         updateSearchResults(res.data);
       }
@@ -47,6 +50,17 @@ function SearchNavBar() {
       searchButton();
     }
   };
+
+  useEffect(() => {
+    const query = localStorage.getItem("query");
+    !query ? setSearchTerm(location.state.query) : setSearchTerm(query);
+    query ? searchButton(query) : searchButton(location.state.query);
+
+    return () => {
+      localStorage.removeItem("query");
+    };
+  }, []);
+
   return (
     <Grid md={12}>
       <Box sx={{ flexGrow: 1 }}>
@@ -56,6 +70,8 @@ function SearchNavBar() {
           sx={{
             position: "fixed",
             top: "0px",
+            paddingTop: "5px",
+            paddingBottom: "5px",
             zIndex: "1",
             bgcolor: "#fff",
             height: "50px",
@@ -71,18 +87,19 @@ function SearchNavBar() {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Grid pl={10}>
+            <Grid md={4} sm={3} pl={2}>
               <input
-                style={{ borderRadius: "50px", height: "35px", width: "300px" }}
-                className="search-input"
-                onKeyDown={handleKeyPress}
-                value={searchTerm}
+                style={{ height: "30px", borderRadius: "50px" }}
                 onChange={handleOnChange}
+                onKeyDown={handleKeyPress}
                 type="text"
-                placeholder="search products"
+                value={searchTerm}
+                className="search-input"
+                placeholder="Search products"
               />
               <IconButton
-                onClick={searchButton}
+                className="search-btn"
+                onClick={() => searchButton(searchTerm)}
                 sx={{
                   color: "#fff",
                   backgroundColor: "#7E30E1",
@@ -92,7 +109,7 @@ function SearchNavBar() {
                 }}
                 size="small"
               >
-                <Search sx={{ color: "#fff" }} />
+                <SearchOutlined />
               </IconButton>
             </Grid>
             <Grid position={"absolute"} right={30}>

@@ -57,14 +57,17 @@ function WishList() {
       <Grid md={12}>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
-            elevation={0}
-            position="static"
-            sx={{
-              position: "fixed",
-              top: "0px",
-              zIndex: "1",
-              bgcolor: "#fff",
-            }}
+           elevation={0}
+           position="static"
+           sx={{
+             position: "fixed",
+             top: "0px",
+             paddingTop:"5px",
+             paddingBottom:"5px",
+             zIndex: "1",
+             bgcolor: "#fff",
+             height: "50px",
+           }}
           >
             <Toolbar variant="dense">
               <IconButton
@@ -118,65 +121,106 @@ function WishList() {
         wishList.map((product) => (
           <Grid
             md={12}
-            sx={{ cursor: "pointer" }}
-            padding={6}
+            sx={{ cursor: "pointer"}}
+            padding={4}
             pt={10}
             border={"1px solid #F8FAE5"}
             display={"flex"}
             flexDirection={"row"}
-            justifyContent={"space-between"}
             width={"100%"}
-            p={5}
           >
-            <Grid md={4} width={"400px"}>
+            <Grid md={4} xs={2}  width={150} sx={{
+              paddingLeft:{
+                md:"40px"
+              }
+            }}>
               <img
                 className="product-img"
                 src={`${BASE_URL}/uploads/${product.image.filename}`}
                 alt="product-image"
               />
             </Grid>
-            <Link to={`/user/view-product/${product._id}`}>
+            <Grid
+            md={6}
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  md: "row",
+                  sm: "column",
+                  xs: "column",
+                },
+                paddingLeft:{
+                  md:"200px",
+                  sm:"150px",
+                  xs:0
+                }
+              }}
+            >
               <Grid
                 md={4}
-                position={"absolute"}
-                left={300}
+                pl={2}
                 display={"flex"}
                 height={"150px"}
+                sx={{
+                  width:{
+                    md:"500px"
+                  }
+                }}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                sx={{ textDecoration: "none" }}
                 color={"black"}
               >
-                <Typography
-                  fontFamily={"poppins"}
-                  color={"#607274"}
-                  fontWeight={500}
-                >
-                  {product.title}
-                </Typography>
-                <Typography fontFamily={"poppins"} fontWeight={500}>
-                  {product.brand}
-                </Typography>
-                <Typography fontFamily={"poppins"} fontWeight={500}>
-                  {product.description}
-                </Typography>
-                <Typography fontFamily={"montserrat"} fontWeight={600}>
-                  ₹{product.price}
-                </Typography>
+                <Link to={`/user/view-product/${product._id}`}>
+                  <Typography
+                    fontFamily={"poppins"}
+                    color={"#607274"}
+                    fontWeight={500}
+                  >
+                    {product.title}
+                  </Typography>
+                  <Typography
+                    fontFamily={"poppins"}
+                    fontWeight={500}
+                    pt={1}
+                    color={"#000"}
+                  >
+                    {product.brand}
+                  </Typography>
+                  <Typography
+                    fontFamily={"poppins"}
+                    fontWeight={500}
+                    color={"#000"}
+                    pt={1}
+                    fontSize={13}
+                    width={"200px"}
+                  >
+                    {product.description}
+                  </Typography>
+                  <Typography
+                    fontFamily={"montserrat"}
+                    fontWeight={600}
+                    color={"#000"}
+                    pt={1}
+                  >
+                    ₹{product.price}
+                  </Typography>
+                </Link>
               </Grid>
-            </Link>
-            <Grid
-              md={4}
-              display={"flex"}
-              height={"150px"}
-              alignItems={"center"}
-            >
-              <button
-                className="custom-btn"
-                onClick={() => removeFromWishList(product._id)}
+              <Grid
+                md={4}
+                display={"flex"}
+                height={"150px"}
+                alignItems={"center"}
+                justifyContent={"flex-start"}
+                pl={3}
               >
-                Remove
-              </button>
+                <button
+                  className="custom-btn"
+                  onClick={() => removeFromWishList(product._id)}
+                >
+                  Remove
+                </button>
+              </Grid>
             </Grid>
           </Grid>
         ))

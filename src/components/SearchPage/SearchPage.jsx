@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearchContext } from "../../context/SearchContext";
@@ -42,10 +35,10 @@ function SearchPage() {
         alignItems={"center"}
         height={"50px"}
         mt={5}
-        bgcolor={"#fafafa"}
-        pr={10}
+        bgcolor={"#fff"}
+        pr={2}
       >
-        <Typography fontFamily={"poppins"} pr={1}>
+        <Typography fontFamily={"poppins"} pr={1} fontSize={15}>
           Sort by:{" "}
         </Typography>
         <select
@@ -55,8 +48,8 @@ function SearchPage() {
           style={{
             width: "150px",
             height: "25px",
-            border: "1px solid grey",
-            borderRadius: "3px",
+            border: "1px solid #f4f4f4",
+            borderRadius: "5px",
           }}
           defaultValue={"featured"}
         >
@@ -70,7 +63,6 @@ function SearchPage() {
           <Grid
             md={12}
             sx={{ cursor: "pointer" }}
-            padding={6}
             pt={10}
             border={"1px solid #F8FAE5"}
             display={"flex"}
@@ -78,10 +70,10 @@ function SearchPage() {
             justifyContent={"space-between"}
             width={"100%"}
             bgcolor={"#fff"}
-            p={5}
+            p={2}
             key={item._id}
           >
-            <Grid md={4} width={"400px"}>
+            <Grid md={6} sm={2} xs={2} pl={1}>
               <img
                 className="product-img"
                 src={`${BASE_URL}/uploads/${item.image.filename}`}
@@ -90,14 +82,22 @@ function SearchPage() {
             </Grid>
             <Link to={`/user/view-product/${item._id}`}>
               <Grid
-                md={4}
+                md={6}
+                sm={6}
+                xs={8}
                 position={"absolute"}
-                left={300}
                 display={"flex"}
                 height={"150px"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                sx={{ textDecoration: "none" }}
+                sx={{
+                  textDecoration: "none",
+                  left: {
+                    md: "300px",
+                    sm: "200px",
+                    xs: "200px",
+                  },
+                }}
                 color={"black"}
               >
                 <Typography
@@ -107,10 +107,18 @@ function SearchPage() {
                 >
                   {item.title}
                 </Typography>
-                <Typography fontFamily={"poppins"} fontWeight={500}>
+                <Typography
+                  fontFamily={"poppins"}
+                  fontWeight={600}
+                  fontSize={15}
+                >
                   {item.brand}
                 </Typography>
-                <Typography fontFamily={"poppins"} fontWeight={500}>
+                <Typography
+                  fontFamily={"poppins"}
+                  fontWeight={500}
+                  fontSize={13}
+                >
                   {item.description}
                 </Typography>
                 <Typography fontFamily={"montserrat"} fontWeight={600}>
