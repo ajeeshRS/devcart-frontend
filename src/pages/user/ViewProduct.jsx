@@ -45,12 +45,9 @@ function ViewProduct() {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/user/get-product/${id}`,
-          {
-            headers: getHeaders(),
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/user/get-product/${id}`, {
+          headers: getHeaders(),
+        });
 
         setProduct(response.data.data);
         // console.log(response.data.message);
@@ -97,6 +94,7 @@ function ViewProduct() {
     <>
       {product ? (
         <>
+          {/* navbar */}
           <Grid md={12}>
             <Box sx={{ flexGrow: 1 }}>
               <AppBar
@@ -146,29 +144,67 @@ function ViewProduct() {
               </AppBar>
             </Box>
           </Grid>
+          {/* navbar ends */}
           <Grid
             md={12}
             width={"100%"}
             height={"90svh"}
             display={"flex"}
-            flexDirection={"row"}
-            justifyContent={"space-between"}
+            sx={{
+              flexDirection: {
+                md: "row",
+                sm: "column",
+                xs: "column",
+              },
+              justifyContent: {
+                md: "space-between",
+                sm: "center",
+                xs: "center",
+              },
+              marginTop: {
+                sm: "30px",
+                xs: "30px",
+              },
+            }}
             alignItems={"center"}
           >
             <Grid
               md={6}
-              width={"50%"}
+              sm={12}
+              xs={12}
+              sx={{
+                width: {
+                  md: "50%",
+                  sm: "100vw",
+                  xs: "100vw",
+                },
+              }}
               display={"flex"}
               justifyContent={"center"}
               alignItems={"center"}
             >
+              {/* product image */}
               <Grid className="product-image" mb={1}>
-               <img style={{width:"500px",height:"500px"}} src={`${BASE_URL}/uploads/${product.image.filename}`} alt="product-img" />
+                <img
+                  style={{ width: "300px", height: "300px" }}
+                  src={`${BASE_URL}/uploads/${product.image.filename}`}
+                  alt="product-img"
+                />
               </Grid>
             </Grid>
+            {/* product texts */}
             <Grid
               md={6}
-              width={"50%"}
+            // p={8}
+            pl={5}
+            pr={5}
+              sx={{
+                width: {
+                  md: "50%",
+                  sm:"100%",
+                  xs:"100%"
+                },
+              }}
               display={"flex"}
               flexDirection={"column"}
               alignItems={"space-between"}
@@ -230,10 +266,10 @@ function ViewProduct() {
               <Grid
                 md={12}
                 pt={5}
-                width={"50%"}
+                width={"100%"}
                 display={"flex"}
                 flexDirection={"row"}
-                justifyContent={"space-between"}
+                justifyContent={"flex-start"}
               >
                 <button
                   className="custom-btn"
@@ -254,6 +290,7 @@ function ViewProduct() {
                   theme="light"
                 />
                 <button
+                style={{marginLeft:"10px"}}
                   className="custom-btn"
                   onClick={() => handleAddToWishlist(product._id)}
                 >

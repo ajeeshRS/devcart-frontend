@@ -117,18 +117,29 @@ function ChooseAddress() {
           md={12}
           width={"100%"}
           display={"flex"}
-          justifyContent={"flex-end"}
+          justifyContent={"space-around"}
+          sx={{
+            justifyContent:{
+              md:"flex-end",
+              sm:"space-around",
+              xs:"space-around"
+            },
+            paddingLeft:{
+              xs:"5px",
+              sm:"5px"
+            }
+          }}
           mt={10}
         >
           <button
             className="custom-btn"
-            style={{ marginRight: "50px" }}
+            style={{ margin: "5px" }}
             onClick={() => navigate("/user/address/saved-addresses")}
           >
             Manage address
           </button>
           <button
-            style={{ marginRight: "50px" }}
+            style={{ margin: "5px" }}
             className="custom-btn"
             onClick={() =>
               selectedAddress

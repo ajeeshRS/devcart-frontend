@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import {FavoriteBorderOutlined} from "@mui/icons-material"
+import { FavoriteBorderOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getHeaders } from "../../utils/auth";
@@ -86,6 +86,7 @@ function UserCartPage() {
   }, [cartProducts]);
   return (
     <>
+      {/* navbar */}
       <Grid md={12}>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
@@ -94,8 +95,10 @@ function UserCartPage() {
             sx={{
               position: "fixed",
               top: "0px",
+              paddingTop: "5px",
               zIndex: "1",
               bgcolor: "#fff",
+              height: "50px",
             }}
           >
             <Toolbar variant="dense">
@@ -130,6 +133,8 @@ function UserCartPage() {
           </AppBar>
         </Box>
       </Grid>
+      {/* navbar ends */}
+      {/* loading state */}
       {loading ? (
         <Grid
           md={12}
@@ -145,102 +150,166 @@ function UserCartPage() {
           </Typography>
         </Grid>
       ) : (
+        // loading state ends
         cartProducts.map((product) => (
+          // product list
           <Grid
             md={12}
             sx={{ cursor: "pointer" }}
-            padding={6}
+            padding={1}
             pt={10}
             border={"1px solid #F8FAE5"}
             display={"flex"}
             flexDirection={"row"}
-            justifyContent={"space-between"}
+            justifyContent={"space-around"}
             width={"100%"}
-            position={"relative"}
-            p={5}
           >
-            <Grid md={4} width={"400px"}>
+            {/* product image */}
+            <Grid
+              md={4}
+              xs={2}
+              width={130}
+              sx={{
+                paddingLeft: {
+                  md: "40px",
+                },
+              }}
+            >
+              {" "}
               <img
                 className="product-img"
                 src={`${BASE_URL}/uploads/${product.image.filename}`}
                 alt="product-image"
               />
             </Grid>
-            <Link to={`/user/view-product/${product._id}`}>
+            <Grid
+            p={1}
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  md: "row",
+                  sm: "column",
+                  xs: "column",
+                },
+                height: {
+                  md: "150px",
+                },
+                justifyContent: "space-between",
+              }}
+            >
+              {/* product texts */}
+              <Link to={`/user/view-product/${product._id}`}>
+                <Grid
+                  md={4}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  sx={{
+                    textDecoration: "none",
+                    marginRight:{
+                      md:"50px"
+                    },
+                    paddingRight: {
+                      md: "56px",
+                      sm: "0",
+                      xs: "0",
+                    },
+                    paddingLeft: {
+                      md: "0",
+                      sm: "15px",
+                      xs: "15px",
+                    },
+                    justifyContent: {
+                      md: "space-between",
+                    },
+                    height: {
+                      md: "150px",
+                    },
+                  }}
+                  color={"black"}
+                >
+                  <Typography
+                    fontFamily={"poppins"}
+                    color={"#607274"}
+                    fontWeight={500}
+                  >
+                    {product.title}
+                  </Typography>
+                  <Typography
+                    fontFamily={"poppins"}
+                    fontWeight={600}
+                    sx={{
+                      display: {
+                        md: "block",
+                        xs: "none",
+                        sm: "none",
+                      },
+                    }}
+                  >
+                    {product.brand}
+                  </Typography>
+                  <Typography fontFamily={"poppins"} fontWeight={500} fontSize={"14px"} pt={1}>
+                    {product.description}
+                  </Typography>
+                </Grid>
+              </Link>
+              {/* product controls */}
               <Grid
                 md={4}
-                position={"absolute"}
-                left={300}
                 display={"flex"}
-                height={"150px"}
-                flexDirection={"column"}
-                justifyContent={"space-between"}
-                sx={{ textDecoration: "none" }}
-                color={"black"}
-              >
-                <Typography
-                  fontFamily={"poppins"}
-                  color={"#607274"}
-                  fontWeight={500}
-                >
-                  {product.title}
-                </Typography>
-                <Typography fontFamily={"poppins"} fontWeight={500}>
-                  {product.brand}
-                </Typography>
-                <Typography fontFamily={"poppins"} fontWeight={500}>
-                  {product.description}
-                </Typography>
-              </Grid>
-            </Link>
-            <Grid
-              md={4}
-              display={"flex"}
-              height={"150px"}
-              alignItems={"center"}
-            >
-              <Grid
-                mr={10}
-                display={"flex"}
-                flexDirection={"row"}
                 alignItems={"center"}
-                position={"absolute"}
-                right={"250px"}
-              >
-                <IconButton
-                  onClick={() =>
-                    updateQuantity(product._id, product.quantity - 1)
-                  }
-                >
-                  <Remove />
-                </IconButton>
-                <Typography>{product.quantity}</Typography>
-                <IconButton
-                  onClick={() =>
-                    updateQuantity(product._id, product.quantity + 1)
-                  }
-                >
-                  <AddIcon />
-                </IconButton>
-              </Grid>
-              <button
-                style={{
-                  marginRight: "20px",
-                  position: "relative",
-                  right: "10px",
+                sx={{
+                  height: {
+                    md: "150px",
+                  },
                 }}
-                className="custom-btn"
-                onClick={() => removeFromCart(product._id)}
               >
-                Remove
-              </button>
-              <Typography fontFamily={"montserrat"} fontWeight={600}>
-                ₹{product.price * product.quantity}
-              </Typography>
+                <Grid
+                  
+                  display={"flex"}
+                  flexDirection={"row"}
+                  alignItems={"center"}
+                >
+                  <IconButton
+                    onClick={() =>
+                      updateQuantity(product._id, product.quantity - 1)
+                    }
+                  >
+                    <Remove />
+                  </IconButton>
+                  <Typography>{product.quantity}</Typography>
+                  <IconButton
+                    onClick={() =>
+                      updateQuantity(product._id, product.quantity + 1)
+                    }
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Grid>
+                <button
+                  style={{
+                    marginLeft: "10px",
+                    padding:"5px",
+                    background:"#7E30E1",
+                    color:"white",
+                    fontFamily:"poppins", 
+                    border:"none",
+                    outline:"none",
+                    borderRadius:"3px",
+                    cursor:"pointer"
+                  }}
+                  onClick={() => removeFromCart(product._id)}
+                >
+                  Remove
+                </button>
+                <Typography fontFamily={"montserrat"} fontWeight={600} pl={2}>
+                  ₹{product.price * product.quantity}
+                </Typography>
+              </Grid>
             </Grid>
           </Grid>
         ))
       )}
+      {/* Total and checkout */}
       {cartProducts.length > 0 && loading == false ? (
         <Grid
           mt={5}
@@ -262,19 +331,22 @@ function UserCartPage() {
           </Link>
         </Grid>
       ) : (
+        // empty cart
         cartProducts.length === 0 &&
         loading == false && (
           <Grid
             md={12}
-            pt={10}
+            p={8}
             width={"100%"}
             height={"90svh"}
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
+            textAlign={"center"}
           >
             <Typography sx={{ color: "grey", fontFamily: "montserrat" }}>
-              Your cart is currently empty. Add some products you want to buy!
+              Your cart is currently empty. <br /> Add some products you want to
+              buy!
             </Typography>
           </Grid>
         )
