@@ -163,6 +163,7 @@ function UserCartPage() {
             flexDirection={"row"}
             justifyContent={"space-around"}
             width={"100%"}
+            key={product._id}
           >
             {/* product image */}
             <Grid

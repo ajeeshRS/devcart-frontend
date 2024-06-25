@@ -41,12 +41,9 @@ function OrderSummaryPage() {
 
   const fetchAddress = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/user/address/${addressId}`,
-        {
-          headers: getHeaders(),
-        }
-      );
+      const res = await axios.get(`${BASE_URL}/user/address/${addressId}`, {
+        headers: getHeaders(),
+      });
       setAddress(res.data);
     } catch (error) {
       console.log(error);
@@ -217,6 +214,7 @@ function OrderSummaryPage() {
 
   return (
     <>
+      {/* navbar */}
       <Grid md={12}>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
@@ -252,15 +250,51 @@ function OrderSummaryPage() {
           </AppBar>
         </Box>
       </Grid>
-      <Grid md={12} mt={12} pb={2} width={"100%"} display={"flex"}>
-        <Typography fontFamily={"poppins"} fontWeight={600} pl={8} pr={1}>
+      {/* navbar ends */}
+      {/* address */}
+      <Grid
+        md={12}
+        mt={12}
+        pb={2}
+        width={"100%"}
+        display={"flex"}
+        sx={{
+          flexDirection: {
+            md: "row",
+            sm: "column",
+            xs: "column",
+          },
+        }}
+      >
+        <Typography
+          fontFamily={"poppins"}
+          fontWeight={600}
+          pr={1}
+          sx={{
+            paddingLeft: {
+              md: 8,
+              xs: "10px",
+              sm: "10px",
+            },
+          }}
+        >
           Deliver to :{" "}
         </Typography>
-        <Typography fontFamily={"poppins"}>
+        <Typography
+          fontFamily={"poppins"}
+          sx={{
+            paddingLeft: {
+              md: 0,
+              xs: "10px",
+              sm: "10px",
+            },
+          }}
+        >
           {" "}
           {address ? addressString : "no address selected"}
         </Typography>
       </Grid>
+      {/* loading state */}
       <Grid md={12}>
         {loading ? (
           <Grid
@@ -275,117 +309,207 @@ function OrderSummaryPage() {
             </Typography>
           </Grid>
         ) : (
+          // list cart products
           cartProducts.map((product) => (
             <Grid
               md={12}
               sx={{ cursor: "pointer" }}
-              padding={6}
+              padding={1}
               pt={10}
               border={"1px solid #F8FAE5"}
               display={"flex"}
               flexDirection={"row"}
-              justifyContent={"space-between"}
+              justifyContent={"space-around"}
               width={"100%"}
-              position={"relative"}
-              p={5}
               key={product._id}
             >
-              <Grid md={4} width={"400px"}>
+              {/* product image */}
+              <Grid
+                md={4}
+                xs={2}
+                width={130}
+                sx={{
+                  paddingLeft: {
+                    md: "40px",
+                  },
+                }}
+              >
+                {" "}
                 <img
                   className="product-img"
                   src={`${BASE_URL}/uploads/${product.image.filename}`}
                   alt="product-image"
                 />
               </Grid>
-              <Link to={`/user/view-product/${product._id}`}>
+              <Grid
+                p={1}
+                sx={{
+                  display: "flex",
+                  flexDirection: {
+                    md: "row",
+                    sm: "column",
+                    xs: "column",
+                  },
+                  height: {
+                    md: "150px",
+                  },
+                  justifyContent: "space-between",
+                }}
+              >
+                {/* product texts */}
+                <Link to={`/user/view-product/${product._id}`}>
+                  <Grid
+                    md={4}
+                    display={"flex"}
+                    flexDirection={"column"}
+                    sx={{
+                      textDecoration: "none",
+                      marginRight: {
+                        md: "50px",
+                      },
+                      paddingRight: {
+                        md: "56px",
+                        sm: "0",
+                        xs: "0",
+                      },
+                      paddingLeft: {
+                        md: "0",
+                        sm: "15px",
+                        xs: "15px",
+                      },
+                      justifyContent: {
+                        md: "space-between",
+                      },
+                      height: {
+                        md: "150px",
+                      },
+                    }}
+                    color={"black"}
+                  >
+                    <Typography
+                      fontFamily={"poppins"}
+                      color={"#607274"}
+                      fontWeight={500}
+                    >
+                      {product.title}
+                    </Typography>
+                    <Typography
+                      fontFamily={"poppins"}
+                      fontWeight={600}
+                      sx={{
+                        display: {
+                          md: "block",
+                          xs: "none",
+                          sm: "none",
+                        },
+                      }}
+                    >
+                      {product.brand}
+                    </Typography>
+                    <Typography
+                      fontFamily={"poppins"}
+                      fontWeight={500}
+                      fontSize={"14px"}
+                      pt={1}
+                    >
+                      {product.description}
+                    </Typography>
+                  </Grid>
+                </Link>
+                {/* product controls */}
                 <Grid
                   md={4}
-                  position={"absolute"}
-                  left={300}
                   display={"flex"}
-                  height={"150px"}
-                  flexDirection={"column"}
-                  justifyContent={"space-between"}
-                  sx={{ textDecoration: "none" }}
-                  color={"black"}
-                >
-                  <Typography
-                    fontFamily={"poppins"}
-                    color={"#607274"}
-                    fontWeight={500}
-                  >
-                    {product.title}
-                  </Typography>
-                  <Typography fontFamily={"poppins"} fontWeight={500}>
-                    {product.brand}
-                  </Typography>
-                  <Typography fontFamily={"poppins"} fontWeight={500}>
-                    {product.description}
-                  </Typography>
-                </Grid>
-              </Link>
-              <Grid
-                md={4}
-                display={"flex"}
-                height={"150px"}
-                alignItems={"center"}
-              >
-                <Grid
-                  mr={10}
-                  display={"flex"}
-                  flexDirection={"row"}
                   alignItems={"center"}
-                  position={"absolute"}
-                  right={"250px"}
-                >
-                  <IconButton
-                    onClick={() =>
-                      updateQuantity(product._id, product.quantity - 1)
-                    }
-                  >
-                    <Remove />
-                  </IconButton>
-                  <Typography>{product.quantity}</Typography>
-                  <IconButton
-                    onClick={() =>
-                      updateQuantity(product._id, product.quantity + 1)
-                    }
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-                <button
-                  style={{
-                    marginRight: "20px",
-                    position: "relative",
-                    right: "10px",
+                  sx={{
+                    height: {
+                      md: "150px",
+                    },
                   }}
-                  className="custom-btn"
-                  onClick={() => removeFromCart(product._id)}
                 >
-                  Remove
-                </button>
-                <Typography fontFamily={"montserrat"} fontWeight={600}>
-                  ₹{product.price * product.quantity}
-                </Typography>
+                  <Grid
+                    display={"flex"}
+                    flexDirection={"row"}
+                    alignItems={"center"}
+                  >
+                    <IconButton
+                      onClick={() =>
+                        updateQuantity(product._id, product.quantity - 1)
+                      }
+                    >
+                      <Remove />
+                    </IconButton>
+                    <Typography>{product.quantity}</Typography>
+                    <IconButton
+                      onClick={() =>
+                        updateQuantity(product._id, product.quantity + 1)
+                      }
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </Grid>
+                  <button
+                    style={{
+                      marginLeft: "10px",
+                      padding: "5px",
+                      background: "#7E30E1",
+                      color: "white",
+                      fontFamily: "poppins",
+                      border: "none",
+                      outline: "none",
+                      borderRadius: "3px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => removeFromCart(product._id)}
+                  >
+                    Remove
+                  </button>
+                  <Typography fontFamily={"montserrat"} fontWeight={600} pl={2}>
+                    ₹{product.price * product.quantity}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           ))
         )}
       </Grid>
+      {/* coupon apply section */}
       <Grid
         md={12}
         width={"100%"}
         height={"100px"}
         display={"flex"}
-        pr={14}
-        justifyContent={"flex-end"}
+        // justifyContent={"flex-end"}
         alignItems={"center"}
         pt={5}
         mb={5}
+        sx={{
+          justifyContent: {
+            md: "flex-end",
+            sm: "center",
+            xs: "center",
+          },
+          paddingRight: {
+            md: 14,
+            sm: "0",
+            xs: "0",
+          },
+        }}
       >
         <Typography
-          sx={{ paddingRight: "10px", fontFamily: "poppins", color: "grey" }}
+          sx={{
+            paddingLeft: "10px",
+            paddingRight: {
+              md: "10px",
+            },
+            fontFamily: "poppins",
+            color: "grey",
+            fontSize: {
+              md: "16px",
+              xs: "12px",
+              sm: "12px",
+            },
+          }}
         >
           Have a discount coupon ?
         </Typography>
@@ -395,7 +519,7 @@ function OrderSummaryPage() {
             borderRadius: "3px",
             border: "1px solid grey",
             height: "35px",
-            marginRight: "10px",
+            marginRight: "5px",
             paddingLeft: "5px",
           }}
           onChange={handleChange}
@@ -418,7 +542,19 @@ function OrderSummaryPage() {
         />
       </Grid>
       <Divider />
-      <Grid pt={5} pl={15} pr={15} pb={10}>
+      {/* total */}
+      <Grid pt={5} pb={10} sx={{
+        paddingRight:{
+          md:15,
+          sm:"10px",
+          xs:"10px"
+        },
+        paddingLeft:{
+          md:15,
+          sm:"10px",
+          xs:"10px"
+        },
+      }}>
         <Typography sx={{ fontFamily: "poppins", fontWeight: "600" }}>
           Price details
         </Typography>
