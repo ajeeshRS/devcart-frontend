@@ -27,6 +27,7 @@ import AddCouponPage from "./pages/admin/AddCouponPage";
 import Dashboard from "./pages/admin/Dashboard";
 import MobileNotSupported from "./components/MobileNotSupported/MobileNotSupported";
 import { useEffect, useState } from "react";
+import NotFoundPage from "./pages/user/NotFoundPage";
 
 function App() {
   // const isMobile= window.innerWidth<=768
@@ -110,6 +111,7 @@ function App() {
             path="/user/profile/edit-profile/change-username"
             element={<ChangeUsernamePage />}
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </SearchProvider>
     </>
