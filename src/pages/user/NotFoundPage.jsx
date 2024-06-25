@@ -31,7 +31,7 @@ function NotFoundPage() {
           to={"/user/home"}
           style={{ textDecoration: "none", color: "white" }}
         >
-          Go back to Home
+          Go to Home
         </Link>
       </button>
     </Grid>
