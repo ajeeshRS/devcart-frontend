@@ -33,7 +33,7 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import { BASE_URL } from "../../utils/helpers";
 
-function Home() {
+function Home({ parentUserState }) {
   const navigate = useNavigate();
 
   const slides = [
@@ -243,7 +243,7 @@ function Home() {
                 key={index}
                 sx={{
                   minWidth: "270px",
-                  maxWidth:"270px",
+                  maxWidth: "270px",
                   height: "260px",
                   borderRadius: 3,
                   border: "1px solid #F3F8FF",
@@ -286,6 +286,9 @@ function Home() {
                   <IconButton
                     aria-label="add to favorites"
                     onClick={() => {
+                      if (parentUserState == null) {
+                        return navigate("/user/login");
+                      }
                       toggleFavorite(product._id);
                     }}
                   >
@@ -298,7 +301,12 @@ function Home() {
 
                   <button
                     className="add-to-cart-btn"
-                    onClick={() => handleAddToCartButton(product._id)}
+                    onClick={() => {
+                      if (parentUserState == null) {
+                        return navigate("/user/login");
+                      }
+                      handleAddToCartButton(product._id);
+                    }}
                   >
                     Add to cart
                   </button>
@@ -346,7 +354,7 @@ function Home() {
                 key={index}
                 sx={{
                   minWidth: "270px",
-                  maxWidth:"270px",
+                  maxWidth: "270px",
                   height: "260px",
                   borderRadius: 3,
                   border: "1px solid #F3F8FF",
@@ -389,6 +397,9 @@ function Home() {
                   <IconButton
                     aria-label="add to favorites"
                     onClick={() => {
+                      if (parentUserState == null) {
+                        return navigate("/user/login");
+                      }
                       toggleFavorite(product._id);
                     }}
                   >
@@ -400,6 +411,9 @@ function Home() {
                   </IconButton>
                   <button
                     onClick={() => {
+                      if (parentUserState == null) {
+                        return navigate("/user/login");
+                      }
                       handleAddToCartButton(product._id);
                     }}
                     className="add-to-cart-btn"
@@ -435,20 +449,14 @@ function Home() {
               View more
             </Button>
           </Grid>
-          <Grid
-            md={12}
-            pl={3}
-            pr={3}
-            pt={4}
-           className="card-container"
-          >
+          <Grid md={12} pl={3} pr={3} pt={4} className="card-container">
             {slicedMonitors.map((product, index) => (
               <Card
                 data-aos="zoom-in"
                 key={index}
                 sx={{
                   minWidth: "270px",
-                  maxWidth:"270px",
+                  maxWidth: "270px",
                   height: "260px",
                   borderRadius: 3,
                   border: "1px solid #F3F8FF",
@@ -491,6 +499,9 @@ function Home() {
                   <IconButton
                     aria-label="add to favorites"
                     onClick={() => {
+                      if (parentUserState == null) {
+                        return navigate("/user/login");
+                      }
                       toggleFavorite(product._id);
                     }}
                   >
@@ -502,6 +513,9 @@ function Home() {
                   </IconButton>
                   <button
                     onClick={() => {
+                      if (parentUserState == null) {
+                        return navigate("/user/login");
+                      }
                       handleAddToCartButton(product._id);
                     }}
                     className="add-to-cart-btn"

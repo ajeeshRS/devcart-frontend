@@ -38,38 +38,6 @@ function DrawerComponent({ cartItems, user }) {
         sx={{ width: "200px" }}
       >
         <List>
-          <ListItemButton>
-            <ListItemIcon>
-              <IconButton sx={{ color: "#0ecc25" }}>
-                <FavoriteBorderOutlined sx={{ color: "black" }} />
-              </IconButton>
-            </ListItemIcon>
-            <ListItemText>
-              <Link to={"/user/wishlist"} className="link-tag">
-                <Badge badgeContent={""}>
-                  <Typography className="typo" fontFamily={"poppins"}>
-                    Wishlist
-                  </Typography>
-                </Badge>
-              </Link>
-            </ListItemText>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <IconButton sx={{ color: "#0ecc25" }}>
-                <ShoppingCartOutlined sx={{ color: "black" }} />
-              </IconButton>
-            </ListItemIcon>
-            <ListItemText>
-              <Link to={"/user/cart"}>
-                <Badge badgeContent={cartItems.length} color="primary">
-                  <Typography className="typo" fontFamily={"poppins"}>
-                    Cart
-                  </Typography>
-                </Badge>
-              </Link>
-            </ListItemText>
-          </ListItemButton>
           {user == null ? (
             <ListItemButton>
               <ListItemIcon>
@@ -87,6 +55,38 @@ function DrawerComponent({ cartItems, user }) {
             </ListItemButton>
           ) : (
             <>
+              <ListItemButton>
+                <ListItemIcon>
+                  <IconButton sx={{ color: "#0ecc25" }}>
+                    <FavoriteBorderOutlined sx={{ color: "black" }} />
+                  </IconButton>
+                </ListItemIcon>
+                <ListItemText>
+                  <Link to={"/user/wishlist"} className="link-tag">
+                    <Badge badgeContent={""}>
+                      <Typography className="typo" fontFamily={"poppins"}>
+                        Wishlist
+                      </Typography>
+                    </Badge>
+                  </Link>
+                </ListItemText>
+              </ListItemButton>
+              <ListItemButton>
+                <ListItemIcon>
+                  <IconButton sx={{ color: "#0ecc25" }}>
+                    <ShoppingCartOutlined sx={{ color: "black" }} />
+                  </IconButton>
+                </ListItemIcon>
+                <ListItemText>
+                  <Link to={"/user/cart"}>
+                    <Badge badgeContent={cartItems.length} color="primary">
+                      <Typography className="typo" fontFamily={"poppins"}>
+                        Cart
+                      </Typography>
+                    </Badge>
+                  </Link>
+                </ListItemText>
+              </ListItemButton>
               <ListItemButton>
                 <ListItemIcon>
                   <IconButton sx={{ color: "#000" }}>

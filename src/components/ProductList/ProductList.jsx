@@ -109,18 +109,26 @@ function ProductList() {
         filteredProducts.map((product) => (
           <Grid
             md={12}
-            sx={{ cursor: "pointer" }}
-            padding={6}
+            sx={{
+              cursor: "pointer",
+              justifyContent: {
+                md: "space-around",
+                xs: "space-between",
+                sm: "space-between",
+              },
+            }}
+            padding={4}
             pt={10}
             border={"1px solid #F8FAE5"}
             display={"flex"}
             flexDirection={"row"}
-            justifyContent={"space-between"}
             width={"100%"}
-            bgcolor={"#fff"}
-            p={5}
           >
-            <Grid md={4} width={"400px"}>
+            <Grid
+              md={4}
+              xs={2}
+              width={150}
+            >
               <img
                 className="product-img"
                 src={`${BASE_URL}/uploads/${product.image.filename}`}
@@ -130,13 +138,16 @@ function ProductList() {
             <Link to={`/user/view-product/${product._id}`}>
               <Grid
                 md={4}
-                position={"absolute"}
-                left={300}
+                pl={2}
                 display={"flex"}
                 height={"150px"}
+                sx={{
+                  width: {
+                    md: "500px",
+                  },
+                }}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                sx={{ textDecoration: "none" }}
                 color={"black"}
               >
                 <Typography
@@ -149,7 +160,17 @@ function ProductList() {
                 <Typography fontFamily={"poppins"} fontWeight={500}>
                   {product.brand}
                 </Typography>
-                <Typography fontFamily={"poppins"} fontWeight={500}>
+                <Typography
+                  fontFamily={"poppins"}
+                  fontWeight={500}
+                  sx={{
+                    overflowY: "hidden",
+                    height: {
+                      xs: "100px",
+                      sm: "100px",
+                    },
+                  }}
+                >
                   {product.description}
                 </Typography>
                 <Typography fontFamily={"montserrat"} fontWeight={600}>
@@ -157,7 +178,7 @@ function ProductList() {
                 </Typography>
               </Grid>
             </Link>
-            <Grid md={4}>
+            <Grid md={4} xs={1} sm={1}>
               <IconButton
                 onClick={() => {
                   toggleFavorite(product._id);

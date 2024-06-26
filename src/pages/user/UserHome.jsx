@@ -9,14 +9,14 @@ import Footer from "../../components/Footer/Footer";
 function UserHome() {
   const location = useLocation();
   const pathName = location.pathname;
-
+  const [parentUserState, setParentUserState] = useState(null);
   return (
     <>
       {pathName === "/user/home" ? (
         <>
-          <NavBar />
-          <Home />
-          <Footer/>
+          <NavBar setParentUserState={setParentUserState} />
+          <Home parentUserState={parentUserState} />
+          <Footer />
         </>
       ) : pathName === "/user/search" ? (
         <>

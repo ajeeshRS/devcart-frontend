@@ -161,7 +161,7 @@ function UserCartPage() {
             border={"1px solid #F8FAE5"}
             display={"flex"}
             flexDirection={"row"}
-            justifyContent={"space-around"}
+            justifyContent={"space-between"}
             width={"100%"}
             key={product._id}
           >
@@ -184,13 +184,17 @@ function UserCartPage() {
               />
             </Grid>
             <Grid
-            p={1}
+              p={1}
               sx={{
                 display: "flex",
                 flexDirection: {
                   md: "row",
                   sm: "column",
                   xs: "column",
+                },
+                width: {
+                  md: "70%",
+                  sm: "60%",
                 },
                 height: {
                   md: "150px",
@@ -206,8 +210,8 @@ function UserCartPage() {
                   flexDirection={"column"}
                   sx={{
                     textDecoration: "none",
-                    marginRight:{
-                      md:"50px"
+                    marginRight: {
+                      md: "50px",
                     },
                     paddingRight: {
                       md: "56px",
@@ -248,7 +252,12 @@ function UserCartPage() {
                   >
                     {product.brand}
                   </Typography>
-                  <Typography fontFamily={"poppins"} fontWeight={500} fontSize={"14px"} pt={1}>
+                  <Typography
+                    fontFamily={"poppins"}
+                    fontWeight={500}
+                    fontSize={"14px"}
+                    pt={1}
+                  >
                     {product.description}
                   </Typography>
                 </Grid>
@@ -263,9 +272,9 @@ function UserCartPage() {
                     md: "150px",
                   },
                 }}
+                pr={1}
               >
                 <Grid
-                  
                   display={"flex"}
                   flexDirection={"row"}
                   alignItems={"center"}
@@ -289,14 +298,14 @@ function UserCartPage() {
                 <button
                   style={{
                     marginLeft: "10px",
-                    padding:"5px",
-                    background:"#7E30E1",
-                    color:"white",
-                    fontFamily:"poppins", 
-                    border:"none",
-                    outline:"none",
-                    borderRadius:"3px",
-                    cursor:"pointer"
+                    padding: "5px",
+                    background: "#7E30E1",
+                    color: "white",
+                    fontFamily: "poppins",
+                    border: "none",
+                    outline: "none",
+                    borderRadius: "3px",
+                    cursor: "pointer",
                   }}
                   onClick={() => removeFromCart(product._id)}
                 >

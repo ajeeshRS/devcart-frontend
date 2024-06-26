@@ -38,7 +38,7 @@ import { getHeaders } from "../../utils/auth";
 import { useSearchContext } from "../../context/SearchContext";
 import { BASE_URL } from "../../utils/helpers";
 
-function NavBar({ setSearchResults }) {
+function NavBar({ setParentUserState }) {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -59,6 +59,7 @@ function NavBar({ setSearchResults }) {
     try {
       const userHeader = getHeaders();
       setUser(userHeader);
+      setParentUserState(userHeader);
     } catch (error) {
       console.log(error);
     }
