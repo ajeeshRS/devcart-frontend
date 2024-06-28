@@ -104,7 +104,13 @@ function UserProfilePage() {
             md={6}
             display={"flex"}
             flexDirection={"column"}
-            height={"70vh"}
+            sx={{
+              height:{
+                md:"70vh",
+                xs:"40vh",
+                sm:"40vh",
+              }
+            }}
             justifyContent={"center"}
             alignItems={"center"}
           >
@@ -146,8 +152,19 @@ function UserProfilePage() {
             md={6}
             display={"flex"}
             flexDirection={"column"}
-            height={"70vh"}
-            justifyContent={"center"}
+            sx={{
+              height:{
+                md:"70vh",
+                xs:"40vh",
+                sm:"40vh",
+              },
+              justifyContent:{
+                md:"center",
+                xs:"flex-start",
+                sm:"flex-start",
+              }
+            }}
+            width={"100%"}
             alignItems={"center"}
             pl={4}
             pr={4}

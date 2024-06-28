@@ -22,12 +22,9 @@ function ViewOrderPage() {
   const { id } = useParams();
   const fetchOrder = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/user/get/order/${id}`,
-        {
-          headers: getHeaders(),
-        }
-      );
+      const response = await axios.get(`${BASE_URL}/user/get/order/${id}`, {
+        headers: getHeaders(),
+      });
       if (response) {
         setDetails(response.data[0]);
         setProductData(response.data[0].productDetails);
@@ -146,11 +143,31 @@ function ViewOrderPage() {
         pl={8}
         pr={8}
         display={"flex"}
+        sx={{
+          flexDirection: {
+            md: "row",
+            sm: "column-reverse",
+            xs: "column-reverse",
+          },
+          alignItems: {
+            md: "center",
+            sm: "flex-start",
+            xs: "flex-start",
+          },
+        }}
         justifyContent={"space-between"}
-        alignItems={"center"}
       >
         <Grid>
-          <Typography sx={{ fontFamily: "montserrat", fontWeight: "600" }}>
+          <Typography
+            sx={{
+              fontFamily: "montserrat",
+              fontWeight: "600",
+              paddingTop: {
+                xs: "20px",
+                sm: "20px",
+              },
+            }}
+          >
             Billing Address
           </Typography>
           <Typography sx={{ fontFamily: "poppins", color: "black" }}>
@@ -190,17 +207,27 @@ function ViewOrderPage() {
       {productData.map((product) => (
         <Grid
           md={12}
-          sx={{ cursor: "pointer" }}
-          padding={6}
+          sx={{
+            cursor: "pointer",
+          }}
+          padding={2}
           pt={10}
           border={"1px solid #F8FAE5"}
           display={"flex"}
           flexDirection={"row"}
-          justifyContent={"space-between"}
           width={"100%"}
-          p={5}
+          justifyContent={"space-between"}
         >
-          <Grid md={4} width={"400px"}>
+          <Grid
+            md={4}
+            xs={2}
+            width={150}
+            sx={{
+              paddingLeft: {
+                md: "40px",
+              },
+            }}
+          >
             <img
               className="product-img"
               src={`${BASE_URL}/uploads/${product.image.filename}`}
@@ -210,36 +237,67 @@ function ViewOrderPage() {
           <Link to={`/user/view-product/${product._id}`}>
             <Grid
               md={4}
-              position={"absolute"}
-              left={300}
               display={"flex"}
               height={"150px"}
               flexDirection={"column"}
-              justifyContent={"space-between"}
-              sx={{ textDecoration: "none" }}
+              sx={{
+                width: {
+                  md: "500px",
+                },
+                textDecoration: "none",
+                justifyContent: {
+                  md: "space-between",
+                },
+              }}
               color={"black"}
             >
               <Typography
                 fontFamily={"poppins"}
                 color={"#607274"}
                 fontWeight={500}
+                sx={{
+                  width: {
+                    xs: 110,
+                    sm: 110,
+                  },
+                }}
               >
                 {product.title}
               </Typography>
               <Typography fontFamily={"poppins"} fontWeight={500}>
                 {product.brand}
               </Typography>
-              <Typography fontFamily={"poppins"} fontWeight={500}>
+              <Typography
+                fontFamily={"poppins"}
+                fontWeight={400}
+                fontSize={"15px"}
+                sx={{
+                  display: {
+                    md: "block",
+                    xs: "none",
+                    sm: "none",
+                  },
+                }}
+              >
                 {product.description}
               </Typography>
-              <Typography fontFamily={"montserrat"} fontWeight={600}>
+              <Typography
+                fontFamily={"montserrat"}
+                fontWeight={600}
+                sx={{
+                  paddingTop: {
+                    xs: "20px",
+                    sm: "20px",
+                  },
+                }}
+              >
                 ₹{product.price}
               </Typography>
             </Grid>
           </Link>
           <Grid>
             <Typography sx={{ fontFamily: "poppins", fontWeight: "500" }}>
-              Quantity: {product.quantity}
+              Quantity {product.quantity}
             </Typography>
           </Grid>
         </Grid>

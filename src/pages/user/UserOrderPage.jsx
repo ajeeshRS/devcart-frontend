@@ -21,12 +21,9 @@ function UserOrderPage() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/user/get/orders`,
-        {
-          headers: getHeaders(),
-        }
-      );
+      const response = await axios.get(`${BASE_URL}/user/get/orders`, {
+        headers: getHeaders(),
+      });
 
       if (response) {
         setOrderData(response.data);
@@ -114,85 +111,126 @@ function UserOrderPage() {
           <Grid
             md={12}
             sx={{ cursor: "pointer" }}
-            padding={6}
+            padding={4}
             pt={10}
             border={"1px solid #F8FAE5"}
             display={"flex"}
             flexDirection={"row"}
-            justifyContent={"space-between"}
             width={"100%"}
-            p={5}
           >
-            <Grid md={4} width={"400px"}>
+            <Grid
+              md={4}
+              xs={2}
+              width={150}
+              sx={{
+                paddingLeft: {
+                  md: "40px",
+                },
+              }}
+            >
               <img
                 className="product-img"
                 src={`${BASE_URL}/uploads/${item.productDetails[0].image.filename}`}
                 alt="product-image"
               />
             </Grid>
-            <Link to={`/user/profile/orders/view-order/${item.orderId}`}>
+            <Grid
+              md={6}
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  md: "row",
+                  sm: "column",
+                  xs: "column",
+                },
+                paddingLeft: {
+                  md: "200px",
+                  sm: "150px",
+                  xs: 0,
+                },
+              }}
+            >
               <Grid
                 md={4}
-                position={"absolute"}
-                left={300}
+                pl={2}
                 display={"flex"}
                 height={"150px"}
+                sx={{
+                  width: {
+                    md: "500px",
+                  },
+                }}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                sx={{ textDecoration: "none" }}
                 color={"black"}
               >
-                <Grid>
-                  <Typography
-                    fontFamily={"poppins"}
-                    color={"#607274"}
-                    fontWeight={500}
-                  >
-                    Order #
-                  </Typography>
-                  <Typography
-                    fontFamily={"poppins"}
+                <Link to={`/user/profile/orders/view-order/${item.orderId}`}>
+                  <Grid
+                    md={4}
+                    display={"flex"}
+                    height={"150px"}
+                    flexDirection={"column"}
+                    justifyContent={"space-between"}
+                    sx={{ textDecoration: "none" }}
                     color={"black"}
-                    fontWeight={500}
                   >
-                    {item.orderId}
-                  </Typography>
-                  <Typography
-                    fontFamily={"poppins"}
-                    color={"black"}
-                    fontWeight={500}
-                  >
-                    {item.productDetails.length} Items
-                  </Typography>
-                </Grid>
-                <Typography fontFamily={"montserrat"} pb={4} fontWeight={600}>
-                  Total : ₹{item.amount / 100}
-                </Typography>
+                    <Grid sx={{paddingRight:"10px"}}>
+                      <Typography
+                        fontFamily={"poppins"}
+                        color={"#607274"}
+                        fontWeight={500}
+                      >
+                        Order #
+                      </Typography>
+                      <Typography
+                        fontFamily={"poppins"}
+                        color={"black"}
+                        fontWeight={500}
+                      >
+                        {item.orderId}
+                      </Typography>
+                      <Typography
+                        fontFamily={"poppins"}
+                        color={"black"}
+                        fontWeight={500}
+                      >
+                        {item.productDetails.length} Items
+                      </Typography>
+                    </Grid>
+                    <Typography
+                      fontFamily={"montserrat"}
+                      pb={4}
+                      fontWeight={600}
+                    >
+                      Total : ₹{item.amount / 100}
+                    </Typography>
+                  </Grid>
+                </Link>
               </Grid>
-            </Link>
-            <Grid
-              md={4}
-              display={"flex"}
-              height={"150px"}
-              alignItems={"center"}
-            >
-              <button
-                className="custom-btn"
-                onClick={() => cancelOrder(item.orderId)}
+              <Grid
+                md={4}
+                display={"flex"}
+                height={"150px"}
+                alignItems={"center"}
               >
-                Cancel
-              </button>
-              <ToastContainer
-                position="top-center"
-                autoClose={3000}
-                hideProgressBar={true}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                theme="light"
-              />
+                <button
+                  className="custom-btn"
+                  onClick={() => cancelOrder(item.orderId)}
+                >
+                  Cancel
+                </button>
+                <ToastContainer
+                  position="top-center"
+                  autoClose={3000}
+                  hideProgressBar={true}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  theme="light"
+                />
+              </Grid>
             </Grid>
           </Grid>
         ))
