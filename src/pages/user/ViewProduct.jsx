@@ -162,8 +162,8 @@ function ViewProduct() {
                 xs: "center",
               },
               marginTop: {
-                sm: "30px",
-                xs: "30px",
+                sm: "45px",
+                xs: "45px",
               },
             }}
             alignItems={"center"}
