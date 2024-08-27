@@ -1,32 +1,21 @@
 import "./NavBar.css";
 import {
-  AppBar,
   Badge,
   Grid,
   IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
-  SvgIcon,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import {
-  AccountCircle,
-  Favorite,
-  FavoriteBorder,
   FavoriteBorderOutlined,
-  FavoriteOutlined,
-  Home,
-  HomeMaxOutlined,
-  HomeOutlined,
   Logout,
   Person,
-  PersonOffOutlined,
   PersonOutline,
   SearchOutlined,
-  ShoppingCart,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 import DrawerComponent from "./DrawerComponent";
@@ -37,6 +26,7 @@ import { Link } from "react-router-dom";
 import { getHeaders } from "../../utils/auth";
 import { useSearchContext } from "../../context/SearchContext";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../Loader/Loader";
 
 function NavBar({ setParentUserState }) {
   const navigate = useNavigate();
@@ -46,6 +36,7 @@ function NavBar({ setParentUserState }) {
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { updateSearchResults } = useSearchContext();
   const [user, setUser] = useState(null);
 
@@ -68,16 +59,19 @@ function NavBar({ setParentUserState }) {
   // to perform search query
   const searchButton = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`${BASE_URL}/user/search/${searchTerm}`, {
         headers: getHeaders(),
       });
       console.log(res.data);
       if (res.status === 200) {
+        setLoading(false);
         updateSearchResults(res.data);
         setSearchTerm("");
         navigate("/user/search", { state: { query: searchTerm } });
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -185,7 +179,7 @@ function NavBar({ setParentUserState }) {
             }}
             size="small"
           >
-            <SearchOutlined />
+            {loading ? <Loader /> : <SearchOutlined />}
           </IconButton>
         </Grid>
 

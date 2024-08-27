@@ -17,18 +17,23 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../../components/Loader/Loader";
 
 function ViewAddresses() {
   const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchAddresses = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`${BASE_URL}/user/view-addresses`, {
         headers: getHeaders(),
       });
+      setLoading(false);
       setAddresses(res.data);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -39,12 +44,9 @@ function ViewAddresses() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(
-        `${BASE_URL}/user/delete-address/${id}`,
-        {
-          headers: getHeaders(),
-        }
-      );
+      const res = await axios.delete(`${BASE_URL}/user/delete-address/${id}`, {
+        headers: getHeaders(),
+      });
       if (res) {
         setAddresses((prevAddress) =>
           prevAddress.filter((item) => item.id !== id)
@@ -59,7 +61,7 @@ function ViewAddresses() {
 
   useEffect(() => {
     fetchAddresses();
-  }, [addresses]);
+  }, []);
   return (
     <>
       <Grid md={12}>
@@ -140,59 +142,75 @@ function ViewAddresses() {
             Saved addresses
           </Typography>
         </Grid>
-        {addresses.map((item) => (
-          <>
-            <Grid
-              md={12}
-              mt={5}
-              pl={11}
-              pr={5}
-              mb={5}
-              width={"100%"}
-              display={"flex"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-            >
-              <Grid display={"flex"} flexDirection={"column"}>
-                <Typography sx={{ fontFamily: "poppins" }}>
-                  {item.fullName}
-                </Typography>
-                <Typography sx={{ fontFamily: "poppins" }}>
-                  {item.phoneNo}
-                </Typography>
-                <Typography sx={{ fontFamily: "poppins" }}>
-                  {item.street}
-                </Typography>
-                <Typography sx={{ fontFamily: "poppins" }}>
-                  {item.city}
-                </Typography>
-                <Typography sx={{ fontFamily: "poppins" }}>
-                  {item.pinCode}
-                </Typography>
+
+        {addresses !== null ? (
+          addresses.map((item) => (
+            <>
+              <Grid
+                md={12}
+                mt={5}
+                pl={11}
+                pr={5}
+                mb={5}
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
+                <Grid display={"flex"} flexDirection={"column"}>
+                  <Typography sx={{ fontFamily: "poppins" }}>
+                    {item.fullName}
+                  </Typography>
+                  <Typography sx={{ fontFamily: "poppins" }}>
+                    {item.phoneNo}
+                  </Typography>
+                  <Typography sx={{ fontFamily: "poppins" }}>
+                    {item.street}
+                  </Typography>
+                  <Typography sx={{ fontFamily: "poppins" }}>
+                    {item.city}
+                  </Typography>
+                  <Typography sx={{ fontFamily: "poppins" }}>
+                    {item.pinCode}
+                  </Typography>
+                </Grid>
+                <Grid>
+                  <IconButton
+                    sx={{ color: "black" }}
+                    onClick={() => {
+                      handleEdit(item._id);
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    sx={{ color: "black" }}
+                    onClick={() => {
+                      handleDelete(item._id);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid>
               </Grid>
-              <Grid>
-                <IconButton
-                  sx={{ color: "black" }}
-                  onClick={() => {
-                    handleEdit(item._id);
-                  }}
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  sx={{ color: "black" }}
-                  onClick={() => {
-                    handleDelete(item._id);
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-            <Divider light />
-          </>
-        ))}
-        <Grid></Grid>
+              <Divider light />
+            </>
+          ))
+        ) : loading ? (
+          <Grid
+            md={12}
+            pt={10}
+            width={"100%"}
+            height={"90svh"}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Loader />
+          </Grid>
+        ) : (
+          <Grid>No saved addresses</Grid>
+        )}
       </Grid>
     </>
   );

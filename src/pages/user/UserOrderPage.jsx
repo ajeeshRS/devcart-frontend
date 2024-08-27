@@ -14,21 +14,26 @@ import { getHeaders } from "../../utils/auth";
 import { ToastContainer } from "react-toastify";
 import { notifyOrderCancel } from "../../utils/toastify";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../../components/Loader/Loader";
 
 function UserOrderPage() {
   const [orderData, setOrderData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const fetchOrders = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${BASE_URL}/user/get/orders`, {
         headers: getHeaders(),
       });
-
+      setLoading(false);
       if (response) {
         setOrderData(response.data);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -174,7 +179,7 @@ function UserOrderPage() {
                     sx={{ textDecoration: "none" }}
                     color={"black"}
                   >
-                    <Grid sx={{paddingRight:"10px"}}>
+                    <Grid sx={{ paddingRight: "10px" }}>
                       <Typography
                         fontFamily={"poppins"}
                         color={"#607274"}
@@ -234,6 +239,17 @@ function UserOrderPage() {
             </Grid>
           </Grid>
         ))
+      ) : loading ? (
+        <Grid
+          pt={10}
+          width={"100%"}
+          height={"90vh"}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Loader />
+        </Grid>
       ) : (
         <Grid
           pt={10}

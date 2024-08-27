@@ -22,6 +22,7 @@ import {
 } from "../../utils/toastify";
 import { ToastContainer } from "react-toastify";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../../components/Loader/Loader";
 
 function OrderSummaryPage() {
   const [Razorpay] = useRazorpay();
@@ -35,17 +36,23 @@ function OrderSummaryPage() {
   const [totalAmountToBePaid, setTotalAmountToBePaid] = useState(null);
   const [discountAmount, setDiscountAmount] = useState(null);
   const [couponValue, setCouponValue] = useState("");
+  const [addressLoading, setAddressLoading] = useState(false);
 
   const { fullName, phoneNo, street, city, state, pinCode } = address;
-  const addressString = `${fullName},${phoneNo},${street},${city},${state},${pinCode}`;
+  const addressString = addressLoading
+    ? undefined
+    : `${fullName},${phoneNo},${street},${city},${state},${pinCode}`;
 
   const fetchAddress = async () => {
     try {
+      setAddressLoading(true);
       const res = await axios.get(`${BASE_URL}/user/address/${addressId}`, {
         headers: getHeaders(),
       });
+      setAddressLoading(false);
       setAddress(res.data);
     } catch (error) {
+      setAddressLoading(false);
       console.log(error);
     }
   };
@@ -291,7 +298,13 @@ function OrderSummaryPage() {
           }}
         >
           {" "}
-          {address ? addressString : "no address selected"}
+          {addressLoading ? (
+            <Loader />
+          ) : !address ? (
+            "no address selected"
+          ) : (
+            addressString
+          )}
         </Typography>
       </Grid>
       {/* loading state */}
@@ -543,18 +556,22 @@ function OrderSummaryPage() {
       </Grid>
       <Divider />
       {/* total */}
-      <Grid pt={5} pb={10} sx={{
-        paddingRight:{
-          md:15,
-          sm:"10px",
-          xs:"10px"
-        },
-        paddingLeft:{
-          md:15,
-          sm:"10px",
-          xs:"10px"
-        },
-      }}>
+      <Grid
+        pt={5}
+        pb={10}
+        sx={{
+          paddingRight: {
+            md: 15,
+            sm: "10px",
+            xs: "10px",
+          },
+          paddingLeft: {
+            md: 15,
+            sm: "10px",
+            xs: "10px",
+          },
+        }}
+      >
         <Typography sx={{ fontFamily: "poppins", fontWeight: "600" }}>
           Price details
         </Typography>

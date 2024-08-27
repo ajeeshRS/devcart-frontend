@@ -14,27 +14,27 @@ import axios from "axios";
 import { getHeaders } from "../../utils/auth";
 import "../../styles/ViewProduct.css";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../../components/Loader/Loader";
 
 function WishList() {
   const [wishList, setWishList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchProductDetails = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${BASE_URL}/user/wishlist`, {
         headers: getHeaders(),
       });
-      setWishList(response.data);
+      console.log(response.data);
       setLoading(false);
+      setWishList(response.data);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    fetchProductDetails();
-  }, [wishList]);
 
   const removeFromWishList = async (itemId) => {
     try {
@@ -52,22 +52,26 @@ function WishList() {
     }
   };
 
+  useEffect(() => {
+    fetchProductDetails();
+  }, []);
+
   return (
     <>
       <Grid md={12}>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
-           elevation={0}
-           position="static"
-           sx={{
-             position: "fixed",
-             top: "0px",
-             paddingTop:"5px",
-             paddingBottom:"5px",
-             zIndex: "1",
-             bgcolor: "#fff",
-             height: "50px",
-           }}
+            elevation={0}
+            position="static"
+            sx={{
+              position: "fixed",
+              top: "0px",
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              zIndex: "1",
+              bgcolor: "#fff",
+              height: "50px",
+            }}
           >
             <Toolbar variant="dense">
               <IconButton
@@ -113,15 +117,13 @@ function WishList() {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Typography sx={{ color: "grey", fontFamily: "montserrat" }}>
-            Loading...
-          </Typography>
+          <Loader />
         </Grid>
       ) : (
         wishList.map((product) => (
           <Grid
             md={12}
-            sx={{ cursor: "pointer"}}
+            sx={{ cursor: "pointer" }}
             padding={4}
             pt={10}
             border={"1px solid #F8FAE5"}
@@ -129,11 +131,16 @@ function WishList() {
             flexDirection={"row"}
             width={"100%"}
           >
-            <Grid md={4} xs={2}  width={150} sx={{
-              paddingLeft:{
-                md:"40px"
-              }
-            }}>
+            <Grid
+              md={4}
+              xs={2}
+              width={150}
+              sx={{
+                paddingLeft: {
+                  md: "40px",
+                },
+              }}
+            >
               <img
                 className="product-img"
                 src={`${BASE_URL}/uploads/${product.image.filename}`}
@@ -141,7 +148,7 @@ function WishList() {
               />
             </Grid>
             <Grid
-            md={6}
+              md={6}
               sx={{
                 display: "flex",
                 flexDirection: {
@@ -149,11 +156,11 @@ function WishList() {
                   sm: "column",
                   xs: "column",
                 },
-                paddingLeft:{
-                  md:"200px",
-                  sm:"150px",
-                  xs:0
-                }
+                paddingLeft: {
+                  md: "200px",
+                  sm: "150px",
+                  xs: 0,
+                },
               }}
             >
               <Grid
@@ -162,9 +169,9 @@ function WishList() {
                 display={"flex"}
                 height={"150px"}
                 sx={{
-                  width:{
-                    md:"500px"
-                  }
+                  width: {
+                    md: "500px",
+                  },
                 }}
                 flexDirection={"column"}
                 justifyContent={"space-between"}

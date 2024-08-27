@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Button,
   Grid,
   IconButton,
   Toolbar,
@@ -9,7 +8,6 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { FavoriteBorderOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,11 +15,13 @@ import { getHeaders } from "../../utils/auth";
 import AddIcon from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../../components/Loader/Loader";
 function UserCartPage() {
   const navigate = useNavigate();
 
   const [cartProducts, setCartProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const removeFromCart = async (itemId) => {
     try {
       const response = await axios.delete(
@@ -45,9 +45,11 @@ function UserCartPage() {
 
   const fetchCartProducts = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${BASE_URL}/user/cart`, {
         headers: getHeaders(),
       });
+      setLoading(false);
       setCartProducts(response.data);
     } catch (error) {
       console.log(error);
@@ -83,7 +85,7 @@ function UserCartPage() {
 
   useEffect(() => {
     fetchCartProducts();
-  }, [cartProducts]);
+  }, []);
   return (
     <>
       {/* navbar */}
@@ -145,9 +147,7 @@ function UserCartPage() {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Typography sx={{ color: "grey", fontFamily: "montserrat" }}>
-            Loading....
-          </Typography>
+          <Loader />
         </Grid>
       ) : (
         // loading state ends

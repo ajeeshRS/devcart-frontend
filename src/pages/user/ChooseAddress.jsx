@@ -21,11 +21,13 @@ import { getHeaders } from "../../utils/auth";
 import { ToastContainer } from "react-toastify";
 import { notifyChooseAddress } from "../../utils/toastify";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../../components/Loader/Loader";
 
 function ChooseAddress() {
   const navigate = useNavigate();
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleOnChange = (id) => {
     setSelectedAddress(id);
@@ -33,11 +35,14 @@ function ChooseAddress() {
 
   const fetchAddresses = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`${BASE_URL}/user/view-addresses`, {
         headers: getHeaders(),
       });
+      setLoading(false);
       setAddresses(res.data);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -97,20 +102,24 @@ function ChooseAddress() {
       <Grid md={12} width={"100%"} display={"flex"} flexDirection={"column"}>
         <FormControl sx={{ marginLeft: "50px", marginTop: "10px" }}>
           <RadioGroup name="radio-buttons-group">
-            {addresses.map((address) => (
-              <FormControlLabel
-                key={address._id}
-                value={address._id}
-                control={<Radio />}
-                label={
-                  <Typography fontFamily={"poppins"}>
-                    {address.fullName}, {address.phoneNo}, {address.street},{" "}
-                    {address.city}, {address.state}, {address.pinCode}.
-                  </Typography>
-                }
-                onChange={() => handleOnChange(address._id)}
-              />
-            ))}
+            {loading ? (
+              <Loader />
+            ) : (
+              addresses.map((address) => (
+                <FormControlLabel
+                  key={address._id}
+                  value={address._id}
+                  control={<Radio />}
+                  label={
+                    <Typography fontFamily={"poppins"}>
+                      {address.fullName}, {address.phoneNo}, {address.street},{" "}
+                      {address.city}, {address.state}, {address.pinCode}.
+                    </Typography>
+                  }
+                  onChange={() => handleOnChange(address._id)}
+                />
+              ))
+            )}
           </RadioGroup>
         </FormControl>
         <Grid
@@ -119,15 +128,15 @@ function ChooseAddress() {
           display={"flex"}
           justifyContent={"space-around"}
           sx={{
-            justifyContent:{
-              md:"flex-end",
-              sm:"space-around",
-              xs:"space-around"
+            justifyContent: {
+              md: "flex-end",
+              sm: "space-around",
+              xs: "space-around",
             },
-            paddingLeft:{
-              xs:"5px",
-              sm:"5px"
-            }
+            paddingLeft: {
+              xs: "5px",
+              sm: "5px",
+            },
           }}
           mt={10}
         >

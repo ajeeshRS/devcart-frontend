@@ -19,6 +19,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import axios from "axios";
 import { getHeaders } from "../../utils/auth";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../../components/Loader/Loader";
 function UserProfilePage() {
   const navigate = useNavigate();
 
@@ -28,15 +29,18 @@ function UserProfilePage() {
   };
 
   const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchUserInfo = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${BASE_URL}/user/get`, {
         headers: getHeaders(),
       });
       if (response) {
         setUserDetails(response.data);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -105,11 +109,11 @@ function UserProfilePage() {
             display={"flex"}
             flexDirection={"column"}
             sx={{
-              height:{
-                md:"70vh",
-                xs:"40vh",
-                sm:"40vh",
-              }
+              height: {
+                md: "70vh",
+                xs: "40vh",
+                sm: "40vh",
+              },
             }}
             justifyContent={"center"}
             alignItems={"center"}
@@ -153,16 +157,16 @@ function UserProfilePage() {
             display={"flex"}
             flexDirection={"column"}
             sx={{
-              height:{
-                md:"70vh",
-                xs:"40vh",
-                sm:"40vh",
+              height: {
+                md: "70vh",
+                xs: "40vh",
+                sm: "40vh",
               },
-              justifyContent:{
-                md:"center",
-                xs:"flex-start",
-                sm:"flex-start",
-              }
+              justifyContent: {
+                md: "center",
+                xs: "flex-start",
+                sm: "flex-start",
+              },
             }}
             width={"100%"}
             alignItems={"center"}
@@ -318,12 +322,23 @@ function UserProfilePage() {
             </button>
           </Grid>
         </Grid>
+      ) : loading ? (
+        <Grid
+          md={6}
+          display={"flex"}
+          flexDirection={"column"}
+          height={"80vh"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Loader />
+        </Grid>
       ) : (
         <Grid
           md={6}
           display={"flex"}
           flexDirection={"column"}
-          height={"70vh"}
+          height={"80vh"}
           justifyContent={"center"}
           alignItems={"center"}
         >

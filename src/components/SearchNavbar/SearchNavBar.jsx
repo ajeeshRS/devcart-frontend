@@ -1,27 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {
-  AppBar,
-  Box,
-  Grid,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Grid, IconButton, Toolbar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {
-  Search,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from "@mui/icons-material";
+import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSearchContext } from "../../context/SearchContext";
 import { getHeaders } from "../../utils/auth";
 import { BASE_URL } from "../../utils/helpers";
+import Loader from "../Loader/Loader";
+
 function SearchNavBar() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
   const { updateSearchResults } = useSearchContext();
   const location = useLocation();
 
@@ -33,14 +25,17 @@ function SearchNavBar() {
   // to perform search query
   const searchButton = async (searchTerm) => {
     try {
-      localStorage.setItem('query',searchTerm);
+      setLoading(true);
+      localStorage.setItem("query", searchTerm);
       const res = await axios.get(`${BASE_URL}/user/search/${searchTerm}`, {
         headers: getHeaders(),
       });
       if (res.status === 200) {
         updateSearchResults(res.data);
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -109,7 +104,7 @@ function SearchNavBar() {
                 }}
                 size="small"
               >
-                <SearchOutlined />
+                {loading ? <Loader /> : <SearchOutlined />}
               </IconButton>
             </Grid>
             <Grid position={"absolute"} right={30}>
